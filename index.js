@@ -4,6 +4,8 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const app = express();
 
+app.use(express.json());
+
 const configuration = new Configuration({
     apiKey: process.env.API_KEY_OPENAI,
 });
@@ -12,20 +14,17 @@ const openai = new OpenAIApi(configuration);
 
 app.post("/find-complexity", async (req, res) => {
     try {
-        // const { content } = req.body;
-        console.log(req.body)
+        const { content } = req.body
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: "Holi"}],
+            messages: [{role: "user", content: content}],
         });
-        console.log(req.body)   
         return res.status(200).json(completion.data.choices[0].message)
     } catch(err) {
         console.log(err)
     }
 })
 
-app.use(express.json());
 
 const port = process.env.PORT || 5000;
 
