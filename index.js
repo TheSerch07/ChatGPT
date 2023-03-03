@@ -3,6 +3,7 @@ require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 
 const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
@@ -25,7 +26,5 @@ app.post("/find-complexity", async (req, res) => {
     }
 });
 
-
-const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server listening on port ${port}`))
