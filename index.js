@@ -23,7 +23,7 @@ app.post("/find-complexity", async (req, res) => {
     } catch(err) {
         console.log(err)
     }
-})
+});
 
 
 const port = process.env.PORT || 5000;
