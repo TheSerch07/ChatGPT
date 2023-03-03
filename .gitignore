@@ -1,0 +1,17 @@
+# Ignorar la carpeta "node_modules"
+node_modules/
+
+# Ignorar los archivos de dependencias específicas
+/react/node_modules/
+
+# Ignorar archivos de caché
+.DS_Store
+.vscode/
+.eslintcache
+
+# Ignorar archivos compilados
+/dist/
+
+# Ignorar archivos de configuración
+.env
+config.js
