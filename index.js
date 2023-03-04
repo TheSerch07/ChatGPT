@@ -42,7 +42,7 @@ app.post("/sendWhatsApp", async (req, res) => {
     }
 
     try {
-        const response = await client.message.create(message)
+        const response = await client.messages.create(message)
         return res.status(200).json(response)
     } catch(err) {
         console.log(err)
