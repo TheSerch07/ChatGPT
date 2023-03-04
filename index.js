@@ -1,5 +1,6 @@
 const express = require("express");
 const twilio = require("twilio");
+const bodyParser = require("body-parser")
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 const { Say } = require("twilio/lib/twiml/VoiceResponse");
@@ -7,7 +8,9 @@ const { Say } = require("twilio/lib/twiml/VoiceResponse");
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 const configuration = new Configuration({
     apiKey: process.env.API_KEY_OPENAI,
@@ -53,17 +56,9 @@ app.post("/sendWhatsApp", async (req, res) => {
 app.post("/whatsapp", async (req, res) => {
     const message = req.body.Body;
     const sender = req.body.From;
-    const client = twilio(
-        process.env.TWILIO_ACCOUNT_SID,
-        process.env.TWILIO_AUTH_TOKEN
-    )
-    const result = await client.conversations.v1.conversations
-    .create()
-    .then(conversation => console.log(conversation.sid));
-    console.log(result, "El resultado")
     console.log(`Mensaje recibido de ${sender}: ${message}`);
-  //Aquí se agregar lógica para procesar el mensaje recibido
-    return res.send('Mensaje recibido');
+    //Aquí puedes agregar lógica para procesar el mensaje recibido
+    res.send('Mensaje recibido');
 })
 
 app.listen(port, () => console.log(`Server listening on port ${port}`))
