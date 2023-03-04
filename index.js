@@ -57,11 +57,11 @@ app.post("/whatsapp", async (req, res) => {
         process.env.TWILIO_ACCOUNT_SID,
         process.env.TWILIO_AUTH_TOKEN
     )
-    client.messages.create({
+    const result = await client.messages.create({
         from: process.env.TWILIO_PHONE_NUMBER,
         to: process.env.WHATSAPP_PHONE_NUMBER
-    }).then(message => console.log(message.sid, "El Sid??")).done();
-    // console.log(req.body, "")
+    }).then(message => message.sid).done();
+    console.log(result, "El resultado")
     console.log(`Mensaje recibido de ${sender}: ${message}`);
   //Aquí se agregar lógica para procesar el mensaje recibido
     return res.send('Mensaje recibido');
