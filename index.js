@@ -50,4 +50,12 @@ app.post("/sendWhatsApp", async (req, res) => {
 })
 
 
+app.post("/whatsapp", async (req, res) => {
+    const message = req.body.Body;
+    const sender = req.body.From;
+    console.log(`Mensaje recibido de ${sender}: ${message}`);
+  //Aquí se agregar lógica para procesar el mensaje recibido
+    return res.send('Mensaje recibido');
+})
+
 app.listen(port, () => console.log(`Server listening on port ${port}`))
