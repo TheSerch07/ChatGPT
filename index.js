@@ -1,6 +1,8 @@
 const express = require("express");
+const twilio = require("twilio");
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
+const { Say } = require("twilio/lib/twiml/VoiceResponse");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -25,6 +27,13 @@ app.post("/find-complexity", async (req, res) => {
         console.log(err)
     }
 });
+
+app.post("/sendWhatsApp", async (req, res) => {
+    const client = twilio(
+        process.env.TWILIO_ACCOUNT_SID,
+        process.env.TWILIO_AUTH_TOKEN
+    )
+})
 
 
 app.listen(port, () => console.log(`Server listening on port ${port}`))
