@@ -56,6 +56,7 @@ app.post("/sendWhatsApp", async (req, res) => {
 app.post("/whatsapp", async (req, res) => {
     const message = req.body.Body;
     const sender = req.body.From;
+    console.log(req.body, "que traes por body??")
     console.log(`Mensaje recibido de ${sender}: ${message}`);
     //Aquí puedes agregar lógica para procesar el mensaje recibido
     res.send('Mensaje recibido');
