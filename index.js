@@ -29,10 +29,24 @@ app.post("/find-complexity", async (req, res) => {
 });
 
 app.post("/sendWhatsApp", async (req, res) => {
+    const { body } = req.body
     const client = twilio(
         process.env.TWILIO_ACCOUNT_SID,
         process.env.TWILIO_AUTH_TOKEN
     )
+
+    const message = {
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: process.env.WHATSAPP_PHONE_NUMBER,
+        body: body
+    }
+
+    try {
+        const response = await client.message.create(message)
+        return res.status(200).json(response)
+    } catch(err) {
+        console.log(err)
+    }
 })
 
 
