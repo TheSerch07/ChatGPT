@@ -67,15 +67,29 @@ app.post("/whatsapp", async (req, res) => {
 app.post("/whatsappResponse", async (req, res) => {
     
     try {
-        const message = req.body.Body;
+        const client = twilio(
+            process.env.TWILIO_ACCOUNT_SID,
+            process.env.TWILIO_AUTH_TOKEN
+        )
+    
         
+        const message = req.body.Body;   
         const sender = req.body.From;
+        
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [{role: "user", content: message}],
         });
+        const messageWhatsapp = {
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: `whatsapp:${sender}`,
+            body: completion.data.choices[0].message
+        }
         console.log(completion.data.choices[0].message, "que emocion")
-        return res.status(200).json(completion.data.choices[0].message)
+
+        const response = await client.messages.create(messageWhatsapp)
+        return res.status(200).json(response)
+        // return res.status(200).json(completion.data.choices[0].message)
     } catch(err) {
         console.log(err)
     }
