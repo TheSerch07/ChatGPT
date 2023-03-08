@@ -74,7 +74,7 @@ app.post("/whatsappResponse", async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: [{role: "user", content: message}],
         });
-        console.log("completion.data.choices[0].message")
+        console.log(completion.data.choices[0].message, "que emocion")
         return res.status(200).json(completion.data.choices[0].message)
     } catch(err) {
         console.log(err)
