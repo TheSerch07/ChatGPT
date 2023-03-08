@@ -1,6 +1,6 @@
 const express = require("express");
 const twilio = require("twilio");
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser")
 const axios = require("axios");
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
@@ -19,18 +19,18 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-app.post("/find-complexity", async (req, res) => {
-    try {
-        const { content } = req.body
-        const completion = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: content}],
-        });
-        return res.status(200).json(completion.data.choices[0].message)
-    } catch(err) {
-        console.log(err)
-    }
-});
+// app.post("/find-complexity", async (req, res) => {
+//     try {
+//         const { content } = req.body
+//         const completion = await openai.createChatCompletion({
+//             model: "gpt-3.5-turbo",
+//             messages: [{role: "user", content: content}],
+//         });
+//         return res.status(200).json(completion.data.choices[0].message)
+//     } catch(err) {
+//         console.log(err)
+//     }
+// });
 
 app.post("/sendWhatsApp", async (req, res) => {
     const { body } = req.body
@@ -63,12 +63,26 @@ app.post("/whatsapp", async (req, res) => {
     res.send('Mensaje recibido');
 })
 
-app.listen(port, () => console.log(`Server listening on port ${port}`))
 
 app.post("/whatsappResponse", async (req, res) => {
-    const message = req.body.Body;
-    const sender = req.body.From;
-    console.log(`Mensaje recibido de ${sender}: ${message}`);
-    //Aquí puedes agregar lógica para procesar el mensaje recibido
-    res.send('Mensaje recibido');
+    
+    try {
+        const message = req.body.Body;
+        
+        const sender = req.body.From;
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [{role: "user", content: message}],
+        });
+        console.log("completion.data.choices[0].message")
+        return res.status(200).json(completion.data.choices[0].message)
+    } catch(err) {
+        console.log(err)
+    }
+
+    // console.log(`Mensaje recibido de ${sender}: ${message}`);
+    // //Aquí puedes agregar lógica para procesar el mensaje recibido
+    // res.send('Mensaje recibido');
 })
+
+app.listen(port, () => console.log(`Server listening on port ${port}`))
