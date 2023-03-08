@@ -1,9 +1,10 @@
 const express = require("express");
 const twilio = require("twilio");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const axios = require("axios");
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
-const { Say } = require("twilio/lib/twiml/VoiceResponse");
+// const { Say } = require("twilio/lib/twiml/VoiceResponse");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -52,8 +53,8 @@ app.post("/sendWhatsApp", async (req, res) => {
     }
 })
 
-
 app.post("/whatsapp", async (req, res) => {
+    
     // const message = req.body.Body;
     const sender = req.body.To;
     console.log(req.body, "que traes por body??")
