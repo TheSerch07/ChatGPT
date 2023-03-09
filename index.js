@@ -82,7 +82,7 @@ app.post("/whatsappResponse", async (req, res) => {
         });
         const messageWhatsapp = {
             from: process.env.TWILIO_PHONE_NUMBER,
-            to: `whatsapp:${sender}`,
+            to: process.env.WHATSAPP_PHONE_NUMBER,
             body: completion.data.choices[0].message.content
         }
         console.log(completion.data.choices[0].message, "que emocion")
