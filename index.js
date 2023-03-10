@@ -75,7 +75,7 @@ app.post("/whatsappResponse", async (req, res) => {
         
         const message = req.body.Body;   
         const sender = req.body.From;
-        console.log({numero : sender})
+        // console.log({numero : sender})
         
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
@@ -83,7 +83,7 @@ app.post("/whatsappResponse", async (req, res) => {
         });
         const messageWhatsapp = {
             from: process.env.TWILIO_PHONE_NUMBER,
-            to: process.env.WHATSAPP_PHONE_NUMBER,
+            to: sender,
             body: completion.data.choices[0].message.content
         }
         // console.log(completion.data.choices[0].message, "que emocion")
